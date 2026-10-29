@@ -1,0 +1,14 @@
+# Never track populated prospect or activity records in public repository
+private/
+data/
+leads/
+contacts/
+*.sqlite
+*.db
+.env
+.env.*
+*.pem
+*.key
+__pycache__/
+*.pyc
+.pytest_cache/
