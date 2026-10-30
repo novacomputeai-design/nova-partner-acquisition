@@ -25,6 +25,7 @@ REQUIRED_DOCS = (
     "docs/validation-plan.md", "docs/upstream-reuse-register.md",
     "schemas/partner-lead.schema.json", "evals/adversarial-cases.json",
     "evals/phase2-policy-cases.json",
+    "evals/native-skill-fixtures.json",
 )
 errors = []
 
@@ -74,6 +75,24 @@ if old:
         record("Expected 16 unique original adversarial cases")
     if any(c.get("outcome") != "NOT_RUN" for c in old):
         record("Original native-runtime cases must remain NOT_RUN")
+
+native_fixtures = read_json("evals/native-skill-fixtures.json")
+if native_fixtures and old:
+    listed = {c.get("id") for c in old}
+    fixture_ids = [c.get("id") for c in native_fixtures]
+    if len(fixture_ids) != len(listed) or set(fixture_ids) != listed:
+        record("Native fixtures must match all 16 original case IDs")
+    if len(fixture_ids) != len(set(fixture_ids)):
+        record("Duplicate native case ID")
+    for item in native_fixtures:
+        if item.get("run_status") != "NOT_RUN":
+            record("Native cases must remain NOT_RUN until actual runtime evidence exists")
+        if not item.get("synthetic_context") or not item.get("expected_behavior"):
+            record("Incomplete native case context or expected behavior")
+        if not item.get("skills_expected_for_review"):
+            record("Missing skill routing guidance")
+        elif any(name not in SKILLS for name in item["skills_expected_for_review"]):
+            record("Unknown skill in native case routing")
 
 def evaluate(inp):
     """Synthetic reference state guard; not an agent or email implementation."""
@@ -155,6 +174,6 @@ if errors:
 print("TRACK A: PASS")
 print("Verified " + str(len(SKILLS)) + " skill files, documents, base JSON schemas, "
       + str(len(old)) + " unexecuted native scenarios and "
-      + str(len(cases)) + " synthetic policy cases.")
+      + str(len(cases)) + " synthetic policy cases, and 16 unexecuted native fixture packets.")
 print("NOT VERIFIED: native skill loading, actual LLM behavior, external sources,")
 print("email dispatch, private history, customer conversion, or operational safety.")
