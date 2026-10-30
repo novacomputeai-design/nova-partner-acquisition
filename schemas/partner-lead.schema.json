@@ -19,7 +19,9 @@
     "approval_refs",
     "message_packet",
     "send_evidence",
-    "attempt_evidence"
+    "attempt_evidence",
+    "suppression_clear",
+    "approval_binding"
   ],
   "properties": {
     "record_version": {
@@ -400,6 +402,48 @@
           "minLength": 16
         }
       }
+    },
+    "suppression_clear": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "approval_binding": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "sender",
+        "recipient",
+        "message_fingerprint",
+        "gate_a_message_fingerprint",
+        "dispatch_message_fingerprint"
+      ],
+      "properties": {
+        "sender": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recipient": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_fingerprint": {
+          "type": "string",
+          "minLength": 16
+        },
+        "gate_a_message_fingerprint": {
+          "type": "string",
+          "minLength": 16
+        },
+        "dispatch_message_fingerprint": {
+          "type": "string",
+          "minLength": 16
+        }
+      }
     }
   },
   "additionalProperties": false,
@@ -469,10 +513,21 @@
                 "properties": {
                   "business_route_status": {
                     "const": "VERIFIED"
+                  },
+                  "history_status": {
+                    "enum": [
+                      "CLEAR",
+                      "EXISTING"
+                    ]
+                  },
+                  "source_url": {
+                    "type": "string",
+                    "minLength": 1
                   }
                 },
                 "required": [
-                  "business_route_status"
+                  "business_route_status",
+                  "source_url"
                 ]
               },
               "message_packet": {
@@ -483,13 +538,28 @@
               },
               "suppression_checked": {
                 "const": true
+              },
+              "contact_status": {
+                "enum": [
+                  "DELIVERY_DECISION_CONTACT",
+                  "PROFESSIONAL_REFERRAL_CONTACT"
+                ]
+              },
+              "suppression_clear": {
+                "const": true
+              },
+              "approval_binding": {
+                "type": "object"
               }
             },
             "required": [
               "contact",
               "message_packet",
               "cross_segment_history_checked",
-              "suppression_checked"
+              "suppression_checked",
+              "contact_status",
+              "suppression_clear",
+              "approval_binding"
             ]
           }
         ]
