@@ -5,6 +5,7 @@ A schema and synthetic evidence strings cannot authenticate approvals,
 provider email IDs or private records. Those require controlled Track C tests.
 """
 from copy import deepcopy
+import hashlib
 from pathlib import Path
 import json
 import sys
@@ -15,7 +16,13 @@ ROOT = Path(__file__).resolve().parents[1]
 schema = json.loads((ROOT / "schemas/partner-lead.schema.json").read_text())
 Draft202012Validator.check_schema(schema)
 validator = Draft202012Validator(schema)
-F = "a" * 64
+def fingerprint(packet):
+    fields = {key: packet[key] for key in ("sender", "recipient", "subject", "body", "attachments")}
+    encoded = json.dumps(fields, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+F = fingerprint({"sender": "founder@example.test", "recipient": "partner@example.test",
+                 "subject": "Exploratory introduction", "body": "Synthetic only", "attachments": []})
 G = "b" * 64
 
 sent = {
@@ -47,7 +54,7 @@ sent = {
     "message_packet": {"sender": "founder@example.test",
                        "recipient": "partner@example.test",
                        "subject": "Exploratory introduction", "body": "Synthetic only",
-                       "fingerprint": F},
+                       "fingerprint": F, "attachments": []},
     "attempt_evidence": {"operation_id": "SYN-OP1",
                          "attempted_at": "2026-10-30T10:01:00-07:00",
                          "message_fingerprint": F},
@@ -80,6 +87,9 @@ def invariant_errors(record):
                           "SENT_CONFIRMED"}
     if approved:
         packet = record.get("message_packet") or {}
+        if all(k in packet for k in ("sender", "recipient", "subject", "body", "attachments")):
+            if packet.get("fingerprint") != fingerprint(packet):
+                errors.append("Message fingerprint does not represent exact content")
         binding = record.get("approval_binding") or {}
         for key in ("sender", "recipient"):
             if packet.get(key) != binding.get(key):
@@ -165,6 +175,9 @@ negative = [
     ("sent-no-provider-proof", "send_evidence", None),
     ("sent-empty-provider-id", "send_evidence.provider_message_id", ""),
     ("sent-packet-changed", "message_packet.fingerprint", G),
+    ("sent-body-tampered", "message_packet.body", "Changed body"),
+    ("sent-subject-tampered", "message_packet.subject", "Changed subject"),
+    ("sent-attachments-tampered", "message_packet.attachments", [{"name": "Synthetic.pdf", "sha256": G}]),
     ("sent-recipient-changed", "message_packet.recipient", "other@example.test"),
     ("sent-gate-a-mismatch", "approval_binding.gate_a_message_fingerprint", G),
     ("sent-dispatch-mismatch", "approval_binding.dispatch_message_fingerprint", G),
