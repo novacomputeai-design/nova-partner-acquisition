@@ -326,7 +326,8 @@
         "recipient",
         "subject",
         "body",
-        "fingerprint"
+        "fingerprint",
+        "attachments"
       ],
       "properties": {
         "sender": {
@@ -347,7 +348,29 @@
         },
         "fingerprint": {
           "type": "string",
-          "minLength": 16
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "sha256"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          }
         }
       }
     },
@@ -373,7 +396,8 @@
         },
         "message_fingerprint": {
           "type": "string",
-          "minLength": 16
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
         }
       }
     },
@@ -399,7 +423,8 @@
         },
         "message_fingerprint": {
           "type": "string",
-          "minLength": 16
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
         }
       }
     },
@@ -432,18 +457,21 @@
         },
         "message_fingerprint": {
           "type": "string",
-          "minLength": 16
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
         },
         "gate_a_message_fingerprint": {
           "type": "string",
-          "minLength": 16
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
         },
         "dispatch_message_fingerprint": {
           "type": [
             "string",
             "null"
           ],
-          "minLength": 16
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
         }
       }
     }
