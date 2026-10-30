@@ -83,7 +83,8 @@ def evaluate(inp):
     current_role = inp.get("role_current", False)
     verified_route = inp.get("route_verified", False) and not bad_address
     person_ok = inp.get("person_relevant", False) and current_role and verified_route
-    fit = inp.get("fit", False) and inp.get("evidence_supported", False)
+    identity_clear = inp.get("identity_clear", False)
+    fit = inp.get("fit", False) and inp.get("evidence_supported", False) and identity_clear
     r0 = inp.get("r0_approved", False)
     draft = fit and person_ok and clear_history and not suppressed and r0
     send = (draft and inp.get("gate_a_approved", False)
@@ -103,8 +104,12 @@ def evaluate(inp):
         reason = "EXISTING_TOUCH"
     elif not clear_history:
         reason = "HISTORY_UNKNOWN"
+    elif not identity_clear:
+        reason = "IDENTITY_CONFLICT"
     elif not current_role:
         reason = "ROLE_UNVERIFIED"
+    elif not inp.get("person_relevant", False):
+        reason = "PERSON_NOT_RELEVANT"
     elif not verified_route:
         reason = "ROUTE_UNVERIFIED"
     elif not fit:
