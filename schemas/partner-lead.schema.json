@@ -419,8 +419,7 @@
         "sender",
         "recipient",
         "message_fingerprint",
-        "gate_a_message_fingerprint",
-        "dispatch_message_fingerprint"
+        "gate_a_message_fingerprint"
       ],
       "properties": {
         "sender": {
@@ -440,7 +439,10 @@
           "minLength": 16
         },
         "dispatch_message_fingerprint": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 16
         }
       }
@@ -631,6 +633,25 @@
             },
             "required": [
               "compliance_ready"
+            ]
+          },
+          {
+            "properties": {
+              "approval_binding": {
+                "type": "object",
+                "required": [
+                  "dispatch_message_fingerprint"
+                ],
+                "properties": {
+                  "dispatch_message_fingerprint": {
+                    "type": "string",
+                    "minLength": 16
+                  }
+                }
+              }
+            },
+            "required": [
+              "approval_binding"
             ]
           }
         ]
