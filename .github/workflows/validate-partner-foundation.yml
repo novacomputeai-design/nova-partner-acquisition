@@ -1,0 +1,29 @@
+name: Partner Acquisition Phase 2 — Static and Policy Validation
+
+on:
+  push:
+    branches:
+      - main
+      - 'test/**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phase2-static-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact revision
+        uses: actions/checkout@v4
+      - name: Python runtime
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Existing baseline structural validator
+        run: python scripts/validate_foundation.py
+      - name: Phase 2 structure and synthetic policy guard tests
+        run: python scripts/validate_phase2.py
