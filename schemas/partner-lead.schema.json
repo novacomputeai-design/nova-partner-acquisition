@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Nova Partner Acquisition Lead",
+  "type": "object",
+  "required": [
+    "record_version",
+    "segment",
+    "account",
+    "opportunity",
+    "contact_status",
+    "outreach_status",
+    "gates",
+    "next_action"
+  ],
+  "properties": {
+    "record_version": {
+      "const": "1.0"
+    },
+    "segment": {
+      "const": "COMMERCIAL_PARTNER"
+    },
+    "account": {
+      "type": "object",
+      "required": [
+        "account_key",
+        "company",
+        "source_url",
+        "checked_at"
+      ],
+      "properties": {
+        "account_key": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "website": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_url": {
+          "type": "string"
+        },
+        "checked_at": {
+          "type": "string"
+        },
+        "legal_identity_status": {
+          "enum": [
+            "VERIFIED",
+            "PARTIAL",
+            "UNKNOWN",
+            "CONFLICT"
+          ]
+        }
+      }
+    },
+    "opportunity": {
+      "type": "object",
+      "required": [
+        "category",
+        "evidence",
+        "verdict",
+        "hypothesis"
+      ],
+      "properties": {
+        "category": {
+          "enum": [
+            "EXPLORATORY_PARTNER",
+            "SIGNAL_ANCHORED",
+            "BUYER_CONFIRMED"
+          ]
+        },
+        "evidence": {
+          "enum": [
+            "VERIFIED_FACT",
+            "PUBLIC_SIGNAL",
+            "PARTNERSHIP_HYPOTHESIS",
+            "BUYER_CONFIRMED",
+            "UNKNOWN",
+            "CONFLICT"
+          ]
+        },
+        "fit_score": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "verdict": {
+          "enum": [
+            "PRIORITIZE",
+            "RESEARCH",
+            "DEPRIORITIZE",
+            "HOLD"
+          ]
+        },
+        "hypothesis": {
+          "type": "string"
+        },
+        "source_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "contact_status": {
+      "enum": [
+        "DELIVERY_DECISION_CONTACT",
+        "PROFESSIONAL_REFERRAL_CONTACT",
+        "RESEARCH_ONLY",
+        "DO_NOT_CONTACT"
+      ]
+    },
+    "contact": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "person_key": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "business_route_status": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "UNAVAILABLE"
+          ]
+        },
+        "history_status": {
+          "enum": [
+            "CLEAR",
+            "EXISTING",
+            "UNKNOWN",
+            "SUPPRESSED",
+            "CONFLICT"
+          ]
+        },
+        "verified_at": {
+          "type": "string"
+        }
+      }
+    },
+    "outreach_status": {
+      "enum": [
+        "NOT_DRAFTED",
+        "DRAFTED",
+        "GATE_A_APPROVED",
+        "DISPATCH_AUTHORIZED",
+        "SEND_ATTEMPTED",
+        "SENT_CONFIRMED",
+        "SEND_UNCERTAIN",
+        "SEND_FAILED",
+        "HOLD"
+      ]
+    },
+    "gates": {
+      "type": "object",
+      "required": [
+        "r0",
+        "gate_a",
+        "dispatch",
+        "gate_b"
+      ],
+      "properties": {
+        "r0": {
+          "enum": [
+            "NOT_ASSESSED",
+            "READY_FOR_REVIEW",
+            "APPROVED",
+            "HOLD"
+          ]
+        },
+        "gate_a": {
+          "enum": [
+            "NOT_ASSESSED",
+            "READY_FOR_REVIEW",
+            "APPROVED",
+            "HOLD"
+          ]
+        },
+        "dispatch": {
+          "enum": [
+            "NOT_ASSESSED",
+            "READY_FOR_REVIEW",
+            "APPROVED",
+            "HOLD"
+          ]
+        },
+        "gate_b": {
+          "enum": [
+            "NOT_ASSESSED",
+            "READY_FOR_REVIEW",
+            "APPROVED",
+            "HOLD"
+          ]
+        }
+      }
+    },
+    "cross_segment_history_checked": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "suppression_checked": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "next_action": {
+      "type": "string"
+    }
+  }
+}
