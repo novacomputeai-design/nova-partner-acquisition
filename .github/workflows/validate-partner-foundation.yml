@@ -23,7 +23,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install schema validator
+        run: python -m pip install jsonschema==4.26.0
       - name: Existing baseline structural validator
         run: python scripts/validate_foundation.py
       - name: Phase 2 structure and synthetic policy guard tests
         run: python scripts/validate_phase2.py
+      - name: Phase 2 schema guard positive and negative tests
+        run: python scripts/validate_schema_guards.py
