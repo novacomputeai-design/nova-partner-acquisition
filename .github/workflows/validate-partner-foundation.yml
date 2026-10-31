@@ -27,6 +27,8 @@ jobs:
         run: python -m pip install jsonschema==4.26.0
       - name: Existing baseline structural validator
         run: python scripts/validate_foundation.py
+      - name: Compile local Codex qualification runner
+        run: python -m py_compile scripts/run_native_qualification.py
       - name: Phase 2 structure and synthetic policy guard tests
         run: python scripts/validate_phase2.py
       - name: Phase 2 schema guard positive and negative tests
