@@ -10,7 +10,18 @@
     "contact_status",
     "outreach_status",
     "gates",
-    "next_action"
+    "next_action",
+    "contact",
+    "cross_segment_history_checked",
+    "suppression_checked",
+    "sender_ready",
+    "compliance_ready",
+    "approval_refs",
+    "message_packet",
+    "send_evidence",
+    "attempt_evidence",
+    "suppression_clear",
+    "approval_binding"
   ],
   "properties": {
     "record_version": {
@@ -29,10 +40,12 @@
       ],
       "properties": {
         "account_key": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "company": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "website": {
           "type": [
@@ -41,10 +54,12 @@
           ]
         },
         "source_url": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "checked_at": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "legal_identity_status": {
           "enum": [
@@ -54,7 +69,8 @@
             "CONFLICT"
           ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "opportunity": {
       "type": "object",
@@ -99,7 +115,8 @@
           ]
         },
         "hypothesis": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "source_urls": {
           "type": "array",
@@ -107,7 +124,8 @@
             "type": "string"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "contact_status": {
       "enum": [
@@ -124,10 +142,12 @@
       ],
       "properties": {
         "person_key": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "role": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "business_route_status": {
           "enum": [
@@ -146,9 +166,29 @@
           ]
         },
         "verified_at": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
+        },
+        "employer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_url": {
+          "type": [
+            "string",
+            "null"
+          ]
         }
-      }
+      },
+      "additionalProperties": false,
+      "required": [
+        "person_key",
+        "employer",
+        "role",
+        "verified_at",
+        "business_route_status",
+        "history_status"
+      ]
     },
     "outreach_status": {
       "enum": [
@@ -204,7 +244,8 @@
             "HOLD"
           ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "cross_segment_history_checked": {
       "type": [
@@ -219,7 +260,513 @@
       ]
     },
     "next_action": {
-      "type": "string"
+      "type": "string",
+      "minLength": 1
+    },
+    "sender_ready": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "compliance_ready": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "approval_refs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "r0",
+        "gate_a",
+        "dispatch",
+        "gate_b"
+      ],
+      "properties": {
+        "r0": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "gate_a": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "dispatch": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "gate_b": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      }
+    },
+    "message_packet": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "sender",
+        "recipient",
+        "subject",
+        "body",
+        "fingerprint",
+        "attachments"
+      ],
+      "properties": {
+        "sender": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recipient": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fingerprint": {
+          "type": "string",
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "attachments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "sha256"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "send_evidence": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "provider_message_id",
+        "sent_at",
+        "message_fingerprint"
+      ],
+      "properties": {
+        "provider_message_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sent_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_fingerprint": {
+          "type": "string",
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "attempt_evidence": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "operation_id",
+        "attempted_at",
+        "message_fingerprint"
+      ],
+      "properties": {
+        "operation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "attempted_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_fingerprint": {
+          "type": "string",
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "suppression_clear": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "approval_binding": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "sender",
+        "recipient",
+        "message_fingerprint",
+        "gate_a_message_fingerprint"
+      ],
+      "properties": {
+        "sender": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recipient": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message_fingerprint": {
+          "type": "string",
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "gate_a_message_fingerprint": {
+          "type": "string",
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "dispatch_message_fingerprint": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 16,
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
     }
-  }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outreach_status": {
+            "enum": [
+              "GATE_A_APPROVED",
+              "DISPATCH_AUTHORIZED",
+              "SEND_ATTEMPTED",
+              "SENT_CONFIRMED",
+              "SEND_UNCERTAIN",
+              "SEND_FAILED"
+            ]
+          }
+        },
+        "required": [
+          "outreach_status"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "properties": {
+              "gates": {
+                "properties": {
+                  "r0": {
+                    "const": "APPROVED"
+                  },
+                  "gate_a": {
+                    "const": "APPROVED"
+                  }
+                },
+                "required": [
+                  "r0",
+                  "gate_a"
+                ]
+              },
+              "approval_refs": {
+                "properties": {
+                  "r0": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "gate_a": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "r0",
+                  "gate_a"
+                ]
+              }
+            },
+            "required": [
+              "gates",
+              "approval_refs"
+            ]
+          },
+          {
+            "properties": {
+              "contact": {
+                "type": "object",
+                "properties": {
+                  "business_route_status": {
+                    "const": "VERIFIED"
+                  },
+                  "history_status": {
+                    "enum": [
+                      "CLEAR",
+                      "EXISTING"
+                    ]
+                  },
+                  "source_url": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "business_route_status",
+                  "source_url"
+                ]
+              },
+              "message_packet": {
+                "type": "object"
+              },
+              "cross_segment_history_checked": {
+                "const": true
+              },
+              "suppression_checked": {
+                "const": true
+              },
+              "contact_status": {
+                "enum": [
+                  "DELIVERY_DECISION_CONTACT",
+                  "PROFESSIONAL_REFERRAL_CONTACT"
+                ]
+              },
+              "suppression_clear": {
+                "const": true
+              },
+              "approval_binding": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "contact",
+              "message_packet",
+              "cross_segment_history_checked",
+              "suppression_checked",
+              "contact_status",
+              "suppression_clear",
+              "approval_binding"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outreach_status": {
+            "enum": [
+              "DISPATCH_AUTHORIZED",
+              "SEND_ATTEMPTED",
+              "SENT_CONFIRMED",
+              "SEND_UNCERTAIN",
+              "SEND_FAILED"
+            ]
+          }
+        },
+        "required": [
+          "outreach_status"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "properties": {
+              "gates": {
+                "properties": {
+                  "dispatch": {
+                    "const": "APPROVED"
+                  }
+                },
+                "required": [
+                  "dispatch"
+                ]
+              },
+              "approval_refs": {
+                "properties": {
+                  "dispatch": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "dispatch"
+                ]
+              }
+            },
+            "required": [
+              "gates",
+              "approval_refs"
+            ]
+          },
+          {
+            "properties": {
+              "sender_ready": {
+                "const": true
+              }
+            },
+            "required": [
+              "sender_ready"
+            ]
+          },
+          {
+            "properties": {
+              "compliance_ready": {
+                "const": true
+              }
+            },
+            "required": [
+              "compliance_ready"
+            ]
+          },
+          {
+            "properties": {
+              "approval_binding": {
+                "type": "object",
+                "required": [
+                  "dispatch_message_fingerprint"
+                ],
+                "properties": {
+                  "dispatch_message_fingerprint": {
+                    "type": "string",
+                    "minLength": 16
+                  }
+                }
+              }
+            },
+            "required": [
+              "approval_binding"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outreach_status": {
+            "enum": [
+              "SEND_ATTEMPTED",
+              "SEND_UNCERTAIN",
+              "SEND_FAILED",
+              "SENT_CONFIRMED"
+            ]
+          }
+        },
+        "required": [
+          "outreach_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "attempt_evidence": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "attempt_evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outreach_status": {
+            "const": "SENT_CONFIRMED"
+          }
+        },
+        "required": [
+          "outreach_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "send_evidence": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "send_evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "opportunity": {
+            "type": "object",
+            "properties": {
+              "category": {
+                "const": "BUYER_CONFIRMED"
+              }
+            },
+            "required": [
+              "category"
+            ]
+          }
+        },
+        "required": [
+          "opportunity"
+        ]
+      },
+      "then": {
+        "properties": {
+          "opportunity": {
+            "properties": {
+              "evidence": {
+                "const": "BUYER_CONFIRMED"
+              }
+            },
+            "required": [
+              "evidence"
+            ]
+          }
+        }
+      }
+    }
+  ]
 }

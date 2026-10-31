@@ -1,0 +1,662 @@
+[
+  {
+    "id": "exploratory-without-rfq",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": true,
+      "proposal": false,
+      "reason": "READY_TO_SEND"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "buyer-confirmed-and-commercial-gates",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": true,
+      "delivery_capacity_confirmed": true,
+      "gate_b_approved": true
+    },
+    "expected": {
+      "draft": true,
+      "send": true,
+      "proposal": true,
+      "reason": "READY_TO_SEND"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "competitor-no-fit",
+    "input": {
+      "fit": false,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "FIT_NOT_ESTABLISHED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "unsourced-fit",
+    "input": {
+      "fit": true,
+      "evidence_supported": false,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "FIT_NOT_ESTABLISHED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "entity-identity-conflict",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": false,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "IDENTITY_CONFLICT"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "irrelevant-cto",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": false,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "PERSON_NOT_RELEVANT"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "stale-employment",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": false,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "ROLE_UNVERIFIED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "guessed-business-email",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": false,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "ROUTE_UNVERIFIED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "bounced-email-channel",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": true,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "ROUTE_UNVERIFIED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "federal-history-unavailable",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": false,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "HISTORY_UNKNOWN"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "individual-opt-out",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": true,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "SUPPRESSED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "organization-opt-out",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": true,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": true,
+      "delivery_capacity_confirmed": true,
+      "gate_b_approved": true
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "SUPPRESSED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "unapproved-corporate-claim",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": false,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": false,
+      "send": false,
+      "proposal": false,
+      "reason": "R0_REQUIRED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "missing-exact-message-approval",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": false,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": false,
+      "proposal": false,
+      "reason": "GATE_A_REQUIRED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "missing-dispatch-authorization",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": false,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": false,
+      "proposal": false,
+      "reason": "DISPATCH_REQUIRED"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "unverified-mailbox",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": false,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": false,
+      "proposal": false,
+      "reason": "SENDER_OR_COMPLIANCE_HOLD"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "cross-border-compliance-unverified",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": false,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": false,
+      "proposal": false,
+      "reason": "SENDER_OR_COMPLIANCE_HOLD"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "provider-timeout-uncertain",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "SEND_UNCERTAIN",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": false,
+      "proposal": false,
+      "reason": "RECONCILE_SEND"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "previous-contact-already-sent",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "SENT_CONFIRMED",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": false,
+      "proposal": false,
+      "reason": "EXISTING_TOUCH"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "staffing-unavailable",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": true,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": true
+    },
+    "expected": {
+      "draft": true,
+      "send": true,
+      "proposal": false,
+      "reason": "READY_TO_SEND"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "commercial-approval-missing",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": true,
+      "delivery_capacity_confirmed": true,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": true,
+      "proposal": false,
+      "reason": "READY_TO_SEND"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  },
+  {
+    "id": "hiring-is-not-buying",
+    "input": {
+      "fit": true,
+      "evidence_supported": true,
+      "identity_clear": true,
+      "person_relevant": true,
+      "role_current": true,
+      "route_verified": true,
+      "bounced_route": false,
+      "suppressed": false,
+      "history_checked": true,
+      "r0_approved": true,
+      "gate_a_approved": true,
+      "dispatch_authorized": true,
+      "sender_ready": true,
+      "compliance_ready": true,
+      "prior_send": "NONE",
+      "buyer_requirement_confirmed": false,
+      "delivery_capacity_confirmed": false,
+      "gate_b_approved": false
+    },
+    "expected": {
+      "draft": true,
+      "send": true,
+      "proposal": false,
+      "reason": "READY_TO_SEND"
+    },
+    "evaluation_kind": "DETERMINISTIC_POLICY_ONLY"
+  }
+]
